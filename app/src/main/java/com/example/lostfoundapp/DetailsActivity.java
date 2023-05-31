@@ -1,8 +1,8 @@
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023
 package com.example.lostfoundapp;
 
 import android.content.Intent;
@@ -17,8 +17,13 @@ import com.example.lostfoundapp.data.DatabaseHelper;
 import com.example.lostfoundapp.model.Advert;
 
 public class DetailsActivity extends AppCompatActivity {
-    DatabaseHelper db;
-    TextView nameText, phoneText, descriptionText, dateText, locationText;
+    DatabaseHelper databaseHelper;
+    TextView selectedOptionText;
+    TextView nameText;
+    TextView phoneText;
+    TextView descriptionText;
+    TextView dateText;
+    TextView coordinateText;
     Button deleteButton;
     Advert advert;
 
@@ -26,26 +31,28 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        db = new DatabaseHelper(this);
+        databaseHelper = new DatabaseHelper(DetailsActivity.this);
+        selectedOptionText = findViewById(R.id.selectedOptionTextView);
         nameText = findViewById(R.id.nameTextView);
         phoneText = findViewById(R.id.phoneTextView);
         descriptionText = findViewById(R.id.descriptionTextView);
         dateText = findViewById(R.id.dateTextView);
-        locationText = findViewById(R.id.locationTextView);
+        coordinateText = findViewById(R.id.coordinateTextView);
         deleteButton = findViewById(R.id.deleteButton);
 
         // Get the name of the selected user from the intent
         String name = getIntent().getStringExtra("name");
 
         // Get the user object from the database
-        advert = db.getAdvertByName(name);
+        advert = databaseHelper.getAdvertByName(name);
 
         // Display the user details in the textviews
-        nameText.setText(advert.getName());
-        phoneText.setText(advert.getPhone());
-        descriptionText.setText(advert.getDescription());
-        dateText.setText(advert.getDate());
-        locationText.setText(advert.getLocation());
+        selectedOptionText.setText("Selected Option: " + advert.getSelectedOption());
+        nameText.setText("Name: " + advert.getName());
+        phoneText.setText("Phone: " + advert.getPhone());
+        descriptionText.setText("Description: " + advert.getDescription());
+        dateText.setText("Date: " + advert.getDate());
+        coordinateText.setText("Coordinate: " + advert.getLatitude() + ", " + advert.getLongitude());
 
         // Set up the delete button click listener
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 // Delete the selected user from the database
-                db.deleteAdvertByName(name);
+                databaseHelper.deleteAdvertByName(name);
                 // Return to the previous activity
                 finish();
             }
@@ -63,7 +70,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 }
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023

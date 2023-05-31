@@ -1,8 +1,8 @@
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023
 package com.example.lostfoundapp;
 
 import android.annotation.SuppressLint;
@@ -22,30 +22,30 @@ import com.example.lostfoundapp.util.Util;
 import java.util.ArrayList;
 
 public class ShowActivity extends AppCompatActivity {
-    DatabaseHelper db;
-    ListView listView;
-    ArrayList<String> dataList;
-    ArrayAdapter<String> adapter;
+    DatabaseHelper databaseHelper;
+    ListView view;
+    ArrayList<String> arrayList;
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
-        db = new DatabaseHelper(this);
+        databaseHelper = new DatabaseHelper(this);
 
-        listView = findViewById(R.id.listView);
+        view = findViewById(R.id.listView);
 
         // Create a new ArrayList to store the data to be displayed in the ListView
-        dataList = new ArrayList<>();
+        arrayList = new ArrayList<>();
 
         // Create a new ArrayAdapter to bind the ArrayList to the ListView
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
 
         // Set the adapter for the ListView
-        listView.setAdapter(adapter);
+        view.setAdapter(arrayAdapter);
 
         // Retrieve all adverts from the database using the getAllAdverts method of the DatabaseHelper class
-        Cursor cursor = db.getAllAdverts();
+        Cursor cursor = databaseHelper.getAllAdvertsCursor();
 
         // If there are any adverts in the database, iterate over them and add each one to the dataList ArrayList
         if (cursor.moveToFirst()) {
@@ -56,23 +56,24 @@ public class ShowActivity extends AppCompatActivity {
                 @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(Util.PHONE));
                 @SuppressLint("Range") String description = cursor.getString(cursor.getColumnIndex(Util.DESCRIPTION));
                 @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex(Util.DATE));
-                @SuppressLint("Range") String location = cursor.getString(cursor.getColumnIndex(Util.LOCATION));
+                @SuppressLint("Range") String latitude = cursor.getString(cursor.getColumnIndex(Util.LATITUDE));
+                @SuppressLint("Range") String longitude = cursor.getString(cursor.getColumnIndex(Util.LONGITUDE));
 
                 // Create a new string with all the advert data
-                String data = "Selected Option: " + selected_option + "\nName: " + name + "\nPhone: " + phone + "\nDescription: " + description + "\nDate: " + date + "\nLocation: " + location;
+                String data = "Selected Option: " + selected_option + "\nName: " + name + "\nPhone: " + phone + "\nDescription: " + description + "\nDate: " + date + "\nCoordinates: " + latitude + ", " + longitude;
 
                 // Add the data to the dataList ArrayList
-                dataList.add(data);
-
-            } while (cursor.moveToNext());
+                arrayList.add(data);
+            }
+            while (cursor.moveToNext());
         }
         cursor.close();
 
         // Notify the adapter that the data has changed, so that it will refresh the ListView
-        adapter.notifyDataSetChanged();
+        arrayAdapter.notifyDataSetChanged();
 
         // Set up item click listener for ListView
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Get the selected item from the ListView
@@ -94,7 +95,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 }
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023

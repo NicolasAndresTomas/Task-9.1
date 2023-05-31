@@ -150,14 +150,30 @@
             />
 
         <EditText
-            android:id="@+id/locationEditText"
+            android:id="@+id/apiLocationEditText"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="8"
-            android:hint="Enter location"
+            android:hint="Enter date"
             />
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/apiLocationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        />
+
+    <Button
+        android:id="@+id/currentLocationButton"
+        android:text="Get Current Location"
+        android:onClick="onClickCurrentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        />
 
     <Button
         android:id="@+id/saveButton"

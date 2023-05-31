@@ -1,8 +1,8 @@
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023
 package com.example.lostfoundapp.data;
 
 import android.annotation.SuppressLint;
@@ -16,6 +16,9 @@ import androidx.annotation.Nullable;
 
 import com.example.lostfoundapp.model.Advert;
 import com.example.lostfoundapp.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -33,7 +36,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Util.PHONE + " TEXT, " +
                 Util.DESCRIPTION + " TEXT, " +
                 Util.DATE + " TEXT, " +
-                Util.LOCATION + " TEXT)";
+                Util.LATITUDE + " TEXT, " +
+                Util.LONGITUDE + " TEXT)";
 
         // Execute the SQL statement to create the table
         sqLiteDatabase.execSQL(CREATE_USER_TABLE);
@@ -57,7 +61,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(Util.PHONE, advert.getPhone());
         contentValues.put(Util.DESCRIPTION, advert.getDescription());
         contentValues.put(Util.DATE, advert.getDate());
-        contentValues.put(Util.LOCATION, advert.getLocation());
+        contentValues.put(Util.LATITUDE, advert.getLatitude());
+        contentValues.put(Util.LONGITUDE, advert.getLongitude());
 
         long newRowId = db.insert(Util.TABLE_NAME, null, contentValues);
         db.close();
@@ -66,9 +71,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Get all adverts from the database
-    public Cursor getAllAdverts() {
+    public Cursor getAllAdvertsCursor() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {Util.ADVERT_ID, Util.SELECTED_OPTION, Util.NAME, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LOCATION};
+        String[] columns = {Util.ADVERT_ID, Util.SELECTED_OPTION, Util.NAME, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LONGITUDE, Util.LATITUDE};
         // Query the table and return a cursor to the results
         Cursor cursor = db.query(Util.TABLE_NAME, columns, null, null, null, null, null);
         return cursor;
@@ -81,10 +86,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.delete(Util.TABLE_NAME, Util.NAME + " = ?", new String[]{name});
     }
 
+    public List<Advert> getAllAdverts() {
+        List<Advert> advertisements = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {Util.ADVERT_ID, Util.SELECTED_OPTION, Util.NAME, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LATITUDE, Util.LONGITUDE};
+        // Query the table and return a cursor to the results
+        Cursor cursor = db.query(Util.TABLE_NAME, columns, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") String selected_option = cursor.getString(cursor.getColumnIndex(Util.SELECTED_OPTION));
+            @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(Util.NAME));
+            @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(Util.PHONE));
+            @SuppressLint("Range") String description = cursor.getString(cursor.getColumnIndex(Util.DESCRIPTION));
+            @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex(Util.DATE));
+            @SuppressLint("Range") Double latitude = cursor.getDouble(cursor.getColumnIndex(Util.LATITUDE));
+            @SuppressLint("Range") Double longitude = cursor.getDouble(cursor.getColumnIndex(Util.LONGITUDE));
+            Advert advertisement = new Advert(selected_option, name, phone, description, date, latitude, longitude);
+            advertisements.add(advertisement);
+        }
+        cursor.close();
+        db.close();
+        return advertisements;
+    }
+
     // Get an advert from the database by its name
     public Advert getAdvertByName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(Util.TABLE_NAME, new String[]{Util.SELECTED_OPTION, Util.NAME, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LOCATION},
+        Cursor cursor = db.query(Util.TABLE_NAME, new String[]{Util.SELECTED_OPTION, Util.NAME, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LATITUDE, Util.LONGITUDE},
                 Util.NAME + "=?", new String[]{name}, null, null, null, null);
         Advert advert = null;
         if (cursor != null && cursor.moveToFirst()) {
@@ -92,8 +119,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(Util.PHONE));
             @SuppressLint("Range") String description = cursor.getString(cursor.getColumnIndex(Util.DESCRIPTION));
             @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex(Util.DATE));
-            @SuppressLint("Range") String location = cursor.getString(cursor.getColumnIndex(Util.LOCATION));
-            advert = new Advert(selected_option, name, phone, description, date, location);
+            @SuppressLint("Range") Double latitude = cursor.getDouble(cursor.getColumnIndex(Util.LATITUDE));
+            @SuppressLint("Range") Double longitude = cursor.getDouble(cursor.getColumnIndex(Util.LONGITUDE));
+            advert = new Advert(selected_option, name, phone, description, date, latitude, longitude);
+
             cursor.close();
         }
         db.close();
@@ -101,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 }
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023

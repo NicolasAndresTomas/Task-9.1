@@ -1,22 +1,30 @@
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023
 package com.example.lostfoundapp.model;
 
 public class Advert {
     private int advert_id;
-    private String selectedOption, name, phone, description, date, location;
+    private String selectedOption;
+    private String name;
+    private String phone;
+    private String description;
+    private String date;
+    private String location;
+    private Double cLatitude;
+    private Double cLongitude;
 
     // Constructor to create an Advert object with all fields set
-    public Advert(String selectedOption, String name, String phone, String description, String date, String location) {
+    public Advert(String selectedOption, String name, String phone, String description, String date, Double cLatitude, Double CLongitude) {
         this.selectedOption = selectedOption;
         this.name = name;
         this.phone = phone;
         this.description = description;
         this.date = date;
-        this.location = location;
+        this.cLatitude = cLatitude;
+        this.cLongitude = CLongitude;
     }
 
     public Advert() {}
@@ -82,9 +90,29 @@ public class Advert {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    // Getter for latitude
+    public Double getLatitude() {
+        return cLatitude;
+    }
+
+    // Setter for latitude
+    public void setLatitude(double latitude) {
+        this.cLatitude = latitude;
+    }
+
+    // Getter for longitude
+    public Double getLongitude() {
+        return cLongitude;
+    }
+
+    // Setter for longitude
+    public void setLongitude(double longitude) {
+        this.cLongitude = longitude;
+    }
 }
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023

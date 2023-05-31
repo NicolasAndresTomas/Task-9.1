@@ -1,3 +1,8 @@
+// SIT305 Mobile Application Development
+//// Task: Pass Task 9.1
+////// Student Name: Nicolas Andres Tomas
+//////// Student ID: 221351413
+////////// Date: 30-05-2023
 package com.example.lostfoundapp.util;
 
 public class Util {
@@ -10,5 +15,11 @@ public class Util {
     public static final String PHONE = "phone";
     public static final String DESCRIPTION = "description";
     public static final String DATE = "date";
-    public static final String LOCATION = "location";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
 }
+// SIT305 Mobile Application Development
+//// Task: Pass Task 9.1
+////// Student Name: Nicolas Andres Tomas
+//////// Student ID: 221351413
+////////// Date: 30-05-2023

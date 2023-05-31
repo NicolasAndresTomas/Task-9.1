@@ -17,10 +17,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         />
+
     <Button
         android:id="@+id/showButton"
         android:text="Show all lost and found items"
         android:onClick="onClickShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        />
+
+    <Button
+        android:id="@+id/showMapButton"
+        android:text="Show On Map"
+        android:onClick="onClickShowMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"

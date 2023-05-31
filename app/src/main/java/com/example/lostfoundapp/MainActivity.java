@@ -1,8 +1,8 @@
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023
 package com.example.lostfoundapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,20 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.lostfoundapp.data.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
-    DatabaseHelper db;
+    DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = new DatabaseHelper(this);
+        databaseHelper = new DatabaseHelper(this);
     }
 
     public void onClickCreate(View view) {
@@ -42,9 +39,18 @@ public class MainActivity extends AppCompatActivity {
         // Starts the ShowActivity activity
         startActivity(showIntent);
     }
+
+    // This method is called when the "Show Map" button is clicked
+    public void onClickShowMap(View view) {
+        // Creates an intent to start the MapActivity activity
+        Intent mapIntent = new Intent(MainActivity.this, MapActivity.class);
+
+        // Starts the MapActivity activity
+        startActivity(mapIntent);
+    }
 }
 // SIT305 Mobile Application Development
-//// Task: Pass Task 7.1
+//// Task: Pass Task 9.1
 ////// Student Name: Nicolas Andres Tomas
 //////// Student ID: 221351413
-////////// Date: 12-05-2023
+////////// Date: 30-05-2023
